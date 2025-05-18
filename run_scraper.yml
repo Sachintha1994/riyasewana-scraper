@@ -1,0 +1,27 @@
+name: Daily Riyasewana Scraper
+
+on:
+  schedule:
+    - cron: '0 9 * * *'  # Runs every day at 09:00 UTC (adjust if needed)
+  workflow_dispatch:  # Allow manual trigger from GitHub UI
+
+jobs:
+  run-scraper:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+
+    - name: Set up Python 3.13
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.13'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests beautifulsoup4
+
+    - name: Run scraper script
+      run: python riyasewana.py
